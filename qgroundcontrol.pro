@@ -52,7 +52,8 @@ LinuxBuild {
 }
 
 WindowsBuild {
-    RC_ICONS = resources/icons/qgroundcontrol.ico
+    # RC_ICONS = resources/icons/qgroundcontrol.ico
+    RC_ICONS = res/resources/cooneo/logo.ico
     CONFIG += resources_big
 }
 
@@ -60,11 +61,11 @@ WindowsBuild {
 # Branding
 #
 
-QGC_APP_NAME        = "QGroundControl"
-QGC_ORG_NAME        = "QGroundControl.org"
-QGC_ORG_DOMAIN      = "org.qgroundcontrol"
-QGC_APP_DESCRIPTION = "Open source ground control app provided by QGroundControl dev team"
-QGC_APP_COPYRIGHT   = "Copyright (C) 2019 QGroundControl Development Team. All rights reserved."
+# QGC_APP_NAME        = "COONEO Control" #"QGroundControl"
+# QGC_ORG_NAME        = "cooneo.cc"
+# QGC_ORG_DOMAIN      = "cc.cooneo"
+# QGC_APP_DESCRIPTION = "Smart car control appilication"
+# QGC_APP_COPYRIGHT   = "Copyright (C) COONEO Development Team. All rights reserved."
 
 WindowsBuild {
     QGC_INSTALLER_SCRIPT        = "$$SOURCE_DIR\\deploy\\windows\\nullsoft_installer.nsi"
@@ -307,6 +308,12 @@ include(QGCExternalLibs.pri)
 # Resources (custom code can replace them)
 #
 
+# QGC_APP_NAME        = "COONEO Control" #"QGroundControl"
+# QGC_ORG_NAME        = "cooneo.cc"
+# QGC_ORG_DOMAIN      = "cc.cooneo"
+# QGC_APP_DESCRIPTION = "Smart car control appilication"
+# QGC_APP_COPYRIGHT   = "Copyright (C) COONEO Development Team. All rights reserved."
+
 CustomBuild {
     exists($$PWD/custom/qgroundcontrol.qrc) {
         message("Using custom qgroundcontrol.qrc")
@@ -333,9 +340,9 @@ CustomBuild {
         RESOURCES += $$PWD/resources/InstrumentValueIcons/InstrumentValueIcons.qrc
     }
 } else {
-    DEFINES += QGC_APPLICATION_NAME=\"\\\"QGroundControl\\\"\"
-    DEFINES += QGC_ORG_NAME=\"\\\"QGroundControl.org\\\"\"
-    DEFINES += QGC_ORG_DOMAIN=\"\\\"org.qgroundcontrol\\\"\"
+    DEFINES += QGC_APPLICATION_NAME=\"\\\"COONEOControl\\\"\"
+    DEFINES += QGC_ORG_NAME=\"\\\"cooneo.cc\\\"\"
+    DEFINES += QGC_ORG_DOMAIN=\"\\\"cc.cooneo\\\"\"
     RESOURCES += \
         $$PWD/qgroundcontrol.qrc \
         $$PWD/qgcresources.qrc \
@@ -1215,6 +1222,7 @@ AndroidBuild {
 #
 
 TRANSLATIONS += $$files($$PWD/translations/qgc_*.ts)
+
 CONFIG+=lrelease embed_translations
 
 #-------------------------------------------------------------------------------------
@@ -1251,7 +1259,7 @@ LinuxBuild {
     share_qgroundcontrol.files = $${IN_PWD}/resources/
 
     share_icons.path = $${PREFIX}/share/icons/hicolor/128x128/apps/
-    share_icons.files = $${IN_PWD}/resources/icons/qgroundcontrol.png
+    share_icons.files = $${IN_PWD}/resources/icons/logo.png
     share_metainfo.path = $${PREFIX}/share/metainfo/
     share_metainfo.files = $${IN_PWD}/deploy/linux/org.mavlink.qgroundcontrol.metainfo.xml
     share_applications.path = $${PREFIX}/share/applications/

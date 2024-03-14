@@ -358,8 +358,9 @@ int main(int argc, char *argv[])
         return -1;
     }
 
+//logo
 #ifdef Q_OS_LINUX
-    QApplication::setWindowIcon(QIcon(":/res/resources/icons/qgroundcontrol.ico"));
+    QApplication::setWindowIcon(QIcon(":/res/resources/cooneo/logo.ico"));
 #endif /* Q_OS_LINUX */
 
     // There appears to be a threading issue in qRegisterMetaType which can cause it to throw a qWarning

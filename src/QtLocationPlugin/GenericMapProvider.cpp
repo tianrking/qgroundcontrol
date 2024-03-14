@@ -52,11 +52,15 @@ QString LINZBasemapMapProvider::_getURL(const int x, const int y, const int zoom
     return LINZBasemapMapUrl.arg(zoom).arg(x).arg(y);
 }
 
-// src\QtLocationPlugin\GenericMapProvider.cpp:79
+// 定义高德地图瓦片服务的URL格式
+// static const QString AmapTileUrl = QStringLiteral("http://webst01.is.autonavi.com/appmaptile?style=6&x=%1&y=%2&z=%3");
+// 0a50c8917e8ab97294b6adc9bc1e5fb8
+static const QString AmapTileUrl = QStringLiteral("http://wprd01.is.autonavi.com/appmaptile?x=%1&y=%2&z=%3&lang=zh_cn&size=1&scl=1&st");
 QString GaodeSatMapProvider::_getURL(const int x, const int y, const int zoom, QNetworkAccessManager* networkManager) {
     Q_UNUSED(networkManager)
-
-    return QStringLiteral("http://webst01.is.autonavi.com/appmaptile?style=6&x=%1&y=%2&z=%3").arg(x).arg(y).arg(zoom);   //高德影像 OK
+    // 使用高德地图的URL格式，并传入x, y, zoom参数
+    qDebug() << QString("http://wprd03.is.autonavi.com/appmaptile?style=7&x=%1&y=%2&z=%3");
+    return QString("http://wprd03.is.autonavi.com/appmaptile?style=7&x=%1&y=%2&z=%3&lang=zh_cn").arg(x).arg(y).arg(zoom);
 }
 
 QString CustomURLMapProvider::_getURL(const int x, const int y, const int zoom, QNetworkAccessManager* networkManager) {

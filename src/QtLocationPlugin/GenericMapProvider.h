@@ -157,7 +157,7 @@ class VWorldSatMapProvider : public MapProvider {
 };
 
 //custom add
-//D:\gcs\qgc-src\v4.0.11\qgroundcontrol\src\QtLocationPlugin\GenericMapProvider.h:80
+
 class GaodeSatMapProvider : public MapProvider {
     Q_OBJECT
 public:

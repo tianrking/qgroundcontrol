@@ -5,6 +5,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QTimer>
+#include <QUrlQuery>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -15,9 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     ui->graphicsView->setScene(scene); //add
     connect(networkManager, &QNetworkAccessManager::finished, this, &MainWindow::onTileLoaded);
-
-    // Load the specified tile
-    loadTile("http://wprd03.is.autonavi.com/appmaptile?style=6&x=5&y=1&z=3");
+    loadTiles(3); // 使用缩放级别3
 }
 
 MainWindow::~MainWindow()
@@ -32,7 +31,31 @@ void MainWindow::on_pushButton_clicked()
     qDebug()<< "click";
 }
 
-void MainWindow::loadTile(const QString &url) {
+
+void MainWindow::loadTiles(int zoomLevel) {
+    // 为了加载4x4的网格，我们设置x和y的范围
+    // int startX = 4, endX = 7; // X坐标的起始和结束
+    // int startY = 0, endY = 3; // Y坐标的起始和结束
+
+    // 为了加载6x6的网格，我们设置x和y的范围
+    int startX = 3, endX = 8; // X坐标的起始和结束
+    int startY = 0, endY = 5; // Y坐标的起始和结束
+
+    // 5x6
+    startX = 3, endX = 7; // X坐标的起始和结束
+    startY = 0, endY = 5; // Y坐标的起始和结束
+
+    for (int x = startX; x <= endX; ++x) {
+        for (int y = startY; y <= endY; ++y) {
+            loadTile(x, y, zoomLevel);
+        }
+    }
+}
+
+// 修改loadTile函数以接受x, y, z参数
+void MainWindow::loadTile(int x, int y, int z) {
+    QString url = QString("http://wprd03.is.autonavi.com/appmaptile?style=7&x=%1&y=%2&z=%3")
+                      .arg(x).arg(y).arg(z);
     QNetworkRequest request(url);
     networkManager->get(request);
 }
@@ -42,8 +65,20 @@ void MainWindow::onTileLoaded(QNetworkReply *reply) {
         QByteArray data = reply->readAll();
         QPixmap pixmap;
         if (pixmap.loadFromData(data)) {
-            scene->addPixmap(pixmap);
-            scene->setSceneRect(pixmap.rect());
+            QUrl url = reply->request().url();
+            QUrlQuery query(url);
+            int x = query.queryItemValue("x").toInt();
+            int y = query.queryItemValue("y").toInt();
+            int z = query.queryItemValue("z").toInt(); // 假设URL中包含了z值
+
+            auto item = scene->addPixmap(pixmap);
+            item->setPos((x - 4) * 256, (y - 0) * 256); // 调整瓦片的位置
+
+            // 创建文本标签显示瓦片信息
+            auto text = new QGraphicsTextItem(QString("x:%1, y:%2, z:%3").arg(x).arg(y).arg(z));
+            text->setPos(item->pos()); // 将文本标签放置在瓦片的左上角
+            text->setDefaultTextColor(Qt::red); // 设置文本颜色为红色
+            scene->addItem(text); // 将文本标签添加到场景中
         }
     }
     reply->deleteLater();

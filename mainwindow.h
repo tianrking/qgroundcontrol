@@ -27,8 +27,8 @@ private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
     QNetworkAccessManager *networkManager;
-    // void loadTile(int x, int y, int z);
-    void loadTile(const QString &url);
+    void loadTiles(int zoomLevel);
+    void loadTile(int x, int y, int z);
 
 
 };
